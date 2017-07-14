@@ -1,0 +1,22 @@
+li{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+span{
+  padding-left:20px;
+  cursor:pointer;
+  background:url("../img/add.png") no-repeat center left;
+}
+li ul{
+  /*display:none;*/
+  opacity:0;height:0;
+  transition:all .5s linear
+}
+li>span.open+ul{
+  /*display:block;*/
+  opacity:1;height:100px;
+}
+span.open{
+  background:url("../img/minus.png") no-repeat center left;
+}

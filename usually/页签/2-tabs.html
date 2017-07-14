@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>读取并修改元素的属性</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="2.css" />
+  <style></style>
+
+</head>
+<body>
+<h2>实现多标签页效果</h2>
+<ul id="tab">
+  <li><a href="#content1">10元套餐</a></li>
+  <li><a href="#content2">30元套餐</a></li>
+  <li><a href="#content3">50元包月</a></li>
+</ul>
+<div id="container">
+  <div id="content1">10元套餐详情：每月套餐内拨打100分钟，超出部分2毛/分钟</div>
+  <div id="content2">30元套餐详情：每月套餐内拨打300分钟，超出部分1.5毛/分钟</div>
+  <div id="content3">50元套餐详情：每月无限量随心打</div>
+</div>
+<script>
+  //默认显示第一个content--z-index为10
+  document.querySelector('#container>div:first-child').style.zIndex=10;
+
+
+  //找到所有的a
+  var as=document.querySelectorAll('#tab a');
+  console.log(as);
+  //找到所有的div
+  var ds=document.querySelectorAll('#container div');
+  console.log(ds);
+  //遍历a，添加点击事件
+  for(var i=0;i<as.length;i++){
+    as[i].onclick=function(){
+      //获取每个a的href中#之后的id
+      var i=this.href.indexOf('#');
+      console.log(i);
+      var id=this.href.slice(i+1);
+      console.log(id);
+      //遍历div，将所有div的zindex清除
+      for(var i=0;i<ds.length;i++){
+        ds[i].style.zIndex='';
+      }
+      //找到和当前a相对的id的div，设置zindex为10
+      var div=document.getElementById(id);
+//      console.log(div);
+      div.style.zIndex=10;
+    }
+  }
+
+
+</script>
+</body>
+</html>

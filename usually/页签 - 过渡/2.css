@@ -1,0 +1,45 @@
+*{
+  padding:0;
+  margin:0;
+}
+a{
+  text-decoration:none;
+}
+#tab li{
+  list-style:none;
+  float:left;
+}
+#tab li:first-child,#content1{
+  background:#FFCC00;
+}
+#tab li:nth-child(2),#content2{
+  background:#FF00CC;
+}
+#tab li:last-child,#content3{
+  background:#00CCFF;
+}
+#tab li>a{
+  display:inline-block;
+  text-align:center;
+  line-height:40px;
+  width:80px;
+  height:40px;
+}
+
+#container{
+  position: relative;
+}
+#content1,#content2,#content3{
+  position: absolute;
+  top:40px;
+  left:0;
+  padding:30px;
+  width:250px;
+  height:0;
+  opacity:0;
+  transition:all .5s linear;
+}
+#content1.show,#content2.show,#content3.show{
+  height:100px;
+  opacity:1;
+}
