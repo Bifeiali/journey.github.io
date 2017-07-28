@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body{
+      height:3000px;
+    }
+    .affix{
+      position:fixed;
+      top:200px;
+      display:none;
+
+    }
+    .affix>ul{
+      list-style:none;
+    }
+    .affix>ul>li{
+      background:#ddd;
+      padding:10px 5px;
+    }
+    .affix>ul>li+li{
+      border-top:1px solid #dff0d8;
+    }
+    .affix>ul>li.active{
+      background:#e4393c;
+    }
+  </style>
+</head>
+<body>
+  <div class="affix">
+    <ul>
+      <li>
+        <a href="#f1">家电</a>
+      </li>
+      <li>
+        <a href="#f2">美妆</a>
+      </li>
+      <li>
+        <a href="#f3">护肤</a>
+      </li>
+    </ul>
+  </div>
+  <script src="js/jquery-1.11.3.js"></script>
+  <script src="js/jquery.js"></script>
+  <script>
+    $(window).scrollspy({
+      target:'div.affix'
+    })
+  </script>
+</body>
+</html>
