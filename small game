@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+        body{
+            text-align: center;
+        }
+        canvas{
+            background: #eeeeee;
+            border: 2px solid #000000;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="958" height="600" id="can"></canvas>
+</body>
+<script type="text/javascript">
+    (function(){
+        var ctx=can.getContext('2d');
+        var ballX= 200,ballY=200,drcBallX= 1,drcBallY= 1,boardX=450,speedX= 1,speedY= 1,
+                arry=[];
+//        [0,1,,3,4,5,6,7,8,9,10,11,12,13,14,15,16],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+        const BX=50,BY=20;
+        can.onmousemove = function(e){
+            boardX = e.offsetX;
+            if(boardX>=908){
+                boardX=908;
+            }
+            if(boardX<=50){
+                boardX=50;
+            }
+        };
+        function direction(){
+            if(ballX>=948){
+                drcBallX=-1;
+            }else if(ballX<=10){
+                drcBallX=1;
+            }
+            if(ballY==540 && ballX>=boardX-50 && ballX<=boardX+50){
+//                speed(ballX,boardX);
+                drcBallY=-1;
+//                console.log(ballX-boardX);
+//                console.log(speedX,speedY)
+            }else if(ballY<=10){
+                drcBallY=1;
+            }
+        }
+        function block(){
+            for(var br=0;br<5;br++){
+                var subArry=[];
+                for(var bc=0;bc<17;bc++){
+                    subArry.push(bc);
+                }
+                arry.push(subArry);
+            }
+
+//            ctx.clearRect(br*BX+6*(br+1)-3,bc*BY+6*(bc+1)-3,BX+6,BY+6);
+//            console.log(arry.toString());
+        }
+        function paintBlock(){
+            for(var br=0;br<arry.length;br++){
+                for(var bc=0;bc<arry[br].length;bc++){
+                    if(arry[br][bc]!==null){
+                        ctx.beginPath();
+                        ctx.rect(arry[br][bc]*BX+6*(arry[br][bc]+1),br*BY+6*(br+1),BX,BY);
+                        ctx.strokeStyle='#363636';
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+//        function speed(ballX,boardX){
+//            var n=ballX-boardX;
+//            if(n>0){
+//                if(drcBallX==1){
+//                    speedX=1.5*(n/50);
+//                    speedY=Math.sqrt(2-speedX*speedX);
+//                }else{
+//                    speedX=1.5/(n/50);
+//                    speedY=Math.sqrt(2-speedX*speedX);
+//                }
+//            }else if(n<0){
+//                n=-n;
+//                if(drcBallX==1){
+//                    speedX=1.5/(n/50);
+//                    speedY=Math.sqrt(2-speedX*speedX);
+//                }else{
+//                    speedX=1.5*(n/50);
+//                    speedY=Math.sqrt(2-speedX*speedX);
+//                }
+//            }
+//        }
+        function clear(){
+            ctx.clearRect(0,0,958,600);
+        }
+        function ball(){
+            ctx.beginPath();
+            ctx.arc(ballX,ballY,10,0,2*Math.PI);
+            ctx.stroke();
+            ballX+=speedX*drcBallX;
+            ballY+=speedY*drcBallY;
+        }
+        function board(){
+            ctx.beginPath();
+            ctx.rect(boardX-50,550,100,10);
+            ctx.stroke();
+        }
+        function isOver(){
+            if(ballY>=590){
+                var str1='GAME OVER!!!';
+                ctx.textBaseline = 'top';
+                ctx.font = '100px SimHei';
+                var txtWidth1 = ctx.measureText(str1).width;
+                ctx.fillText(str1, 500-txtWidth1/2, 200);
+                var str2='TRY AGAIN';
+                ctx.textBaseline = 'top';
+                ctx.font = '80px SimHei';
+                ctx.fillStyle='#';
+                var txtWidth2 = ctx.measureText(str2).width;
+                ctx.fillText(str2, 500-txtWidth2/2, 320);
+                clearInterval(timer);
+                timer=null;
+            }
+        }
+        function clearBlock(){
+            for(var br=0;br<arry.length;br++){
+                for(var bc=0;bc<arry[br].length;bc++){
+                    if( ballY-10==br*BY+6*(br+1)+BY&&ballX>=arry[br][bc]*BX+6*(arry[br][bc]+1)&&ballX<=arry[br][bc]*BX+6*(arry[br][bc]+1)+BX){
+                        drcBallY=1;
+                        arry[br][bc]=null;
+                    }
+                    else  if( ballY+10==br*BY+6*(br+1)&&ballX>=arry[br][bc]*BX+6*(arry[br][bc]+1)&&ballX<=arry[br][bc]*BX+6*(arry[br][bc]+1)+BX){
+                        drcBallY=-1;
+                        arry[br][bc]=null;
+                    }
+                    //else if((ballY>=br*BY+6*(br+1)&&ballY<=br*BY+6*(br+1)+BY)&&ballX+10>=arry[br][bc]*BX+6*(arry[br][bc]+1)){
+                        //drcBallX=-1;
+                       //arry[br][bc]=null;
+                   //}
+                   //else if((ballY>=br*BY+6*(br+1)&&ballY<=br*BY+6*(br+1)+BX)&&ballX-10<=arry[br][bc]*BX+6*(arry[br][bc]+1)+BX){
+                        //drcBallX=1;
+                        //arry[br][bc]=null;
+                   //}
+                }
+            }
+        }
+        block();
+        console.dir(arry);
+        var timer=setInterval(function(){
+            clear();
+            clearBlock();
+            paintBlock();
+
+            ball();
+            board();
+            direction();
+            isOver();
+        },1);
+    })();
+</script>
+<html>
