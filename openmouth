@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body{
+            text-align: center;
+        }
+        canvas{
+            margin-top:10px;
+            background: #ddd;}
+    </style>
+</head>
+<body>
+<canvas id="c1" width='1024px' height='1024px'></canvas>
+
+<script>
+    function game(){
+        var status=1;
+        var a=-1;
+        var ctx = c1.getContext('2d');
+        ctx.lineWidth = 4;
+        setInterval(function(){
+            ctx.clearRect(0,0,500,400);
+            if(status==1){
+
+                open();
+                console.log(1);
+            }else{
+                close();
+                console.log(2);
+            }
+            status*=-1;
+
+
+        },3000);
+
+        function open( ) {
+            var s = 45 * Math.PI / 180;
+            var e = -45 * Math.PI / 180;
+            ctx.beginPath();
+            ctx.arc(250, 200, 100, s, e);
+            ctx.lineTo(250, 200);
+            ctx.closePath();
+            ctx.stroke();
+            //眼睛
+            var s1 = 0 * Math.PI / 180;
+            var e1 = 360 * Math.PI / 180;
+            ctx.beginPath();
+            ctx.arc(250, 130, 20, s1, e1);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            //眼球
+            var s2 = 0 * Math.PI / 180;
+            var e2 = 360 * Math.PI / 180;
+            ctx.beginPath();
+            ctx.arc(260, 120, 5, s1, e1);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+        }
+        function close(){
+            //另一种状态
+            var s3=0*Math.PI/180;
+            var e3=360*Math.PI/180;
+            ctx.beginPath();
+            ctx.arc(250,200,100,s3,e3);
+            ctx.lineTo(250,200);
+            ctx.closePath();
+            ctx.stroke();
+            //眼睛
+            var s1=0*Math.PI/180;
+            var e1=360*Math.PI/180;
+            ctx.beginPath();
+            ctx.arc(250,130,20,s1,e1);
+            ctx.fillStyle='blue';
+            ctx.fill();
+            //眼球
+            var s2=0*Math.PI/180;
+            var e2=360*Math.PI/180;
+            ctx.beginPath();
+            ctx.arc(260,120,5,s1,e1);
+            ctx.fillStyle='#fff';
+            ctx.fill();
+        }
+    }
+
+   game();
+</script>
+</body>
+</html>
